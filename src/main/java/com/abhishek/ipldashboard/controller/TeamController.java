@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @RequestMapping(path = "/team")
@@ -20,6 +21,7 @@ public class TeamController {
     public Team getTeam(@PathVariable String teamName,
                         @RequestParam(name = "page", required = false, defaultValue = "0") int page,
                         @RequestParam(name = "page-size", required = false, defaultValue = "4") int pageSize) {
+        log.info("Get Request to fetch the team details for team - {}", teamName);
         Team team = teamRepository.findByTeamName(teamName);
         team.setMatches(matchRepository.getLatestMatchesByTeam(teamName, page, pageSize));
         return team;
